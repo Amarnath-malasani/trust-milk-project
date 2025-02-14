@@ -1,19 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"trust-milk-backend/config"
-	"trust-milk-backend/routes"
+    "fmt"
+    "trust-milk-backend/config"
+    "trust-milk-backend/routes"
 
-	"github.com/gin-gonic/gin"
+    "github.com/gin-gonic/gin"
 )
 
 func main() {
-	config.ConnectDB()
+    config.ConnectDB()
 
-	router := gin.Default()
-	routes.SetupRoutes(router)
+    router := gin.Default()
 
-	fmt.Println("Server running on port 8080...")
-	router.Run(":8080")
+    // Serve static files
+    router.Static("/static", "../frontend")
+
+    // Serve the main HTML file
+    router.GET("/", func(c *gin.Context) {
+        c.File("../frontend/index.html")
+    })
+
+    // Setup routes
+    routes.SetupRoutes(router)
+
+    fmt.Println("Server running on port 8080...")
+    router.Run(":8080")
 }

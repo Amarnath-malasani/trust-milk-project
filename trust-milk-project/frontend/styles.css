@@ -1,15 +1,253 @@
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f9fa;
+  color: rgb(15, 172, 219);
+  padding: 10px 20px;
+}
+
+header h1 {
+  margin: 0;
+}
+
+.brand-name {
+  font-family: 'Pacifico', cursive;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+  align-items: center; /* Align items vertically */
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  background-color: transparent;
+  color: rgb(15, 172, 219);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.4em; /* Increased font size */
+}
+
+.icon:hover {
+  color: #007bff;
+}
+
+.username {
+  font-size: 0.8em; /* Decreased font size */
+  color: rgb(15, 172, 219);
+  text-align: center;
+  margin-top: -5px; /* Adjust margin to position it closer to the icon */
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.banner {
+  width: 100%; /* Increased width */
+  max-width: 1200px; /* Added max-width */
+  padding: 50px; /* Increased padding */
+  text-align: left; /* Align text to the left */
+  border: 1px solid #ddd;
+  border-radius: 15px; /* Added rounded corners */
+  min-height: 140px; /* Added minimum height */
+  position: relative; /* Added for button positioning */
+  display: flex; /* Added flex display */
+  justify-content: space-between; /* Space between elements */
+  align-items: center; /* Center align items */
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.banner-milk {
+  background-color: #d1f2eb; /* Light teal for milk */
+}
+
+.banner-meat {
+  background-color: #f8d7da; /* Light pink for meat */
+}
+
+.banner h2 {
+  margin: 0; /* Removed top margin */
+  font-size: 2em; /* Increased font size */
+}
+
+.banner-img {
+  width: 150px; /* Adjust the size as needed */
+  height: auto;
+  margin-left: 20px; /* Added left margin */
+}
+
+.animated-img {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
   }
-  
-  .popup {
-    display: none;
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border: 1px solid #ccc;
+  50% {
+    transform: translateY(-10px);
   }
-  
+}
+
+.order-button {
+  display: inline-block;
+  margin-top: 25px; /* Adjusted margin to move button down */
+  padding: 5px 10px; /* Adjusted padding to make the button smaller */
+  background-color: #28a745;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em; /* Adjusted font size to make the button smaller */
+  width: 120px; /* Set a fixed width for consistency */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for animation */
+}
+
+.order-button:hover {
+  background-color: #218838;
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+/* Popup styles */
+.popup {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scroll */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.popup-content {
+  background-color: #fefefe;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 400px;
+  border-radius: 10px;
+  text-align: center; /* Center the text */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.popup-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align items */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%; /* Ensure full width */
+  position: relative; /* Added for positioning the eye icon */
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+.input-field {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Added transition for focus effect */
+}
+
+.input-field:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Added box shadow for focus effect */
+}
+
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.form-group .login-button {
+  margin: 0 auto; /* Center the button */
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Added transition for animation */
+}
+
+.form-group .login-button:hover {
+  background-color: #218838;
+  transform: scale(1.1); /* Scale up on hover */
+}
+
+.create-account {
+  margin-top: 20px;
+}
+
+.create-account a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.create-account a:hover {
+  text-decoration: underline;
+}
