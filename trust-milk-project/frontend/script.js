@@ -10,9 +10,14 @@ var createAccountLink = document.getElementById("createAccountLink");
 var loginClose = loginModal.getElementsByClassName("close")[0];
 var createAccountClose = createAccountModal.getElementsByClassName("close")[0];
 
-// When the user clicks the login button, open the login modal
+// When the user clicks the login button, check if logged in and open the login modal or update the UI
 loginBtn.onclick = function() {
-  loginModal.style.display = "block";
+  var username = localStorage.getItem("username");
+  if (username) {
+    updateUIWithUsername(username); // Update the UI with the username
+  } else {
+    loginModal.style.display = "block";
+  }
 }
 
 // When the user clicks the create account link, open the create account modal
@@ -59,7 +64,8 @@ document.getElementById("loginForm").onsubmit = function(event) {
       alert(data.message);
       loginModal.style.display = "none";
       localStorage.setItem("username", data.username);
-      updateUIWithUsername(data.username);
+      localStorage.setItem("mobile", data.mobile); // Assuming mobile is returned in the response
+      updateUIWithUsername(data.username); // Update the UI with the username
     } else {
       alert(data.error);
     }

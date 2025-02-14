@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - C:/Users/AMARNATH/Documents/trust-milk-project/trust-milk-project/backend/mongodb_data:/data/db
+      - mongodb_data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin123
