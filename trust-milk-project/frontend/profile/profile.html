@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Page</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile i {
+  color: #2596be; /* Updated icon color */
+  background-color: #fff; /* Updated background color */
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.profile h2 {
+  margin: 10px 0 5px;
+  font-size: 18px;
+}
+
+.profile p {
+  color: gray;
+  font-size: 14px;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.menu li span {
+  margin-right: 10px;
+  color: #2596be; /* Updated icon color */
+  background-color: #fff; /* Updated background color */
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.menu li:hover, .menu .active {
+  background: #f0f0f0;
+}
+
+.logout {
+  text-align: center;
+  margin-top: 20px;
+  color: red;
+  cursor: pointer;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Orders, Locations, Wallet */
+.content-section {
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+  display: none;
+}
+
+.order-card {
+  background: #f8f8f8;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.order-price {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Box styling for sections */
+.box {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input, .form-group p {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-group p {
+  background-color: #f9f9f9;
+  margin: 0;
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.form-group label[for="defaultAddress"] {
+  display: inline-block;
+  width: auto;
+}
+
+.form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Email input container */
+.email-input-container {
+  display: flex;
+  align-items: center;
+}
+
+.email-input-container input {
+  flex: 1;
+}
+
+.email-input-container button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.email-input-container button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Button container */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Button styling */
+button {
+  display: inline-block;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reset-password, .delete-account, .add-location, .autofill-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.reset-password:hover, .delete-account:hover, .add-location:hover, .autofill-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.add-location {
+  background-color: #007bff;
+  color: white;
+  margin-bottom: 15px;
+  width: 90%; /* Adjust the width as needed */
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.add-location:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.autofill-btn {
+  margin-top: 15px;
+  width: 90%; /* Adjust the width as needed */
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.autofill-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Modal styling */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Disable scroll */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* Centered horizontally */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Adjust the width as needed */
+  max-width: 400px; /* Adjust the max-width as needed */
+  border-radius: 10px;
+  overflow: hidden; /* Disable scroll */
+  max-height: 90vh; /* Ensure it fits within one screen */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.modal-header {
+  cursor: move;
+  padding: 10px;
+  color: black; /* Remove background color */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-body {
+  padding: 10px;
+  max-height: 70vh; /* Adjust the max-height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.save-location {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+</style>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="profile">
+                <i class="fas fa-user-circle fa-4x"></i>
+                <h2>Amar</h2>
+            </div>
+            <ul class="menu">
+                <li class="active" onclick="showSection('profile', event)"><span>👤</span> Profile</li>
+                <li onclick="showSection('orders', event)"><span>👜</span> Orders</li>
+                <li onclick="showSection('locations', event)"><span>📍</span> Locations</li>
+            </ul>
+            <div class="logout" onclick="logoutUser()">Log Out</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h2 id="section-title">Profile</h2>
+
+            <!-- Profile Section -->
+            <div id="profile" class="content-section box">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" value="Amar" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="text" id="mobile" value="9381393620" readonly>
+                </div>
+                <div class="form-group email-group">
+                    <label for="email">Email</label>
+                    <div class="email-input-container">
+                        <input type="email" id="email" placeholder="Add your email address" value="amar@example.com">
+                        <button class="submit-email" onclick="submitEmail()">Submit</button>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button class="reset-password" onclick="resetPassword()">Reset Password</button>
+                    <button class="delete-account" onclick="deleteAccount()">Delete Account</button>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders" class="content-section box hidden">
+                <div class="order-card">
+                    <p><strong>Order delivered ✅</strong></p>
+                    <p>Placed at 14th Jan 2025, 04:51 pm</p>
+                    <p class="order-price">₹129.64</p>
+                </div>
+                <div class="order-card">
+                    <p><strong>Order delivered ✅</strong></p>
+                    <p>Placed at 12th Jan 2025, 04:14 pm</p>
+                    <p class="order-price">₹95.39</p>
+                </div>
+            </div>
+
+            <!-- Locations Section -->
+            <div id="locations" class="content-section box hidden">
+                <button class="add-location" onclick="addLocation()">Add Location</button>
+                <button class="autofill-btn" onclick="autofillLocation()">🟡 Save time. Autofill your current location.</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Address Popup Modal -->
+    <div id="addLocationModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Add Location</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="fullName">Full Name (First and Last name)</label>
+                    <input type="text" id="fullName" placeholder="Enter full name">
+                </div>
+                <div class="form-group">
+                    <label for="mobileNumber">Mobile Number (For delivery contact)</label>
+                    <input type="text" id="mobileNumber" placeholder="Enter mobile number">
+                </div>
+                <div class="form-group">
+                    <label for="pincode">Pincode (6-digit postal code)</label>
+                    <input type="text" id="pincode" placeholder="Enter pincode">
+                </div>
+                <div class="form-group">
+                    <label for="addressDetails">Address Details (House No., Street, Village)</label>
+                    <input type="text" id="addressDetails" placeholder="Enter address details">
+                </div>
+                <div class="form-group">
+                    <label for="townCity">Town/City</label>
+                    <input type="text" id="townCity" placeholder="Enter town/city">
+                </div>
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <select id="state">
+                        <option value="">Select State</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                        <!-- Add more states as needed -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="defaultAddress">
+                        <input type="checkbox" id="defaultAddress"> Set as Default Address
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="deliveryInstructions">Delivery Instructions (Optional)</label>
+                    <input type="text" id="deliveryInstructions" placeholder="Enter delivery instructions">
+                </div>
+                <button class="save-location" onclick="saveLocation()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+<script>
+    let map, marker;
+
+function showSection(section, event) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
+
+    // Show the selected section
+    document.getElementById(section).classList.remove('hidden');
+
+    // Change the section title
+    document.getElementById('section-title').innerText = section.charAt(0).toUpperCase() + section.slice(1);
+
+    // Update active menu
+    document.querySelectorAll('.menu li').forEach(item => item.classList.remove('active'));
+    event.target.classList.add('active');
+}
+
+function logoutUser() {
+    alert("Logging out...");
+    // Redirect or clear session (if needed)
+}
+
+function deleteAccount() {
+    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        alert("Account deleted.");
+        // Add logic to delete the account
+    }
+}
+
+function resetPassword() {
+    alert("Password reset link has been sent to your email.");
+    // Add logic to send a password reset link
+}
+
+function submitEmail() {
+    const email = document.getElementById('email').value;
+    alert(`Email submitted: ${email}`);
+    // Add logic to submit the email
+}
+
+function autofillLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    // Use a geocoding API to convert lat/lon to address details
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('addressDetails').value = data.display_name;
+            document.getElementById('townCity').value = data.address.city || data.address.town || data.address.village;
+            document.getElementById('state').value = data.address.state;
+            document.getElementById('pincode').value = data.address.postcode;
+
+            // Open the "Add Location" modal with filled-in details
+            addLocation();
+        })
+        .catch(error => {
+            console.error('Error fetching location data:', error);
+            alert('Error fetching location data.');
+        });
+}
+
+function chooseLocation() {
+    const latLng = marker.getLatLng();
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latLng.lat}&lon=${latLng.lng}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('addressDetails').value = data.display_name;
+            document.getElementById('townCity').value = data.address.city || data.address.town || data.address.village;
+            document.getElementById('state').value = data.address.state;
+            document.getElementById('pincode').value = data.address.postcode;
+            closeMapModal();
+        })
+        .catch(error => {
+            console.error('Error fetching location data:', error);
+            alert('Error fetching location data.');
+        });
+}
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+function makeModalDraggable() {
+    const modalHeader = document.querySelector('.modal-header.draggable');
+    const modal = document.querySelector('.modal-content');
+    let isDragging = false;
+    let startY, initialY;
+
+    modalHeader.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startY = e.clientY;
+        initialY = modal.offsetTop;
+        document.body.style.cursor = 'move';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const dy = e.clientY - startY;
+            modal.style.top = `${initialY + dy}px`;
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+        document.body.style.cursor = 'default';
+    });
+}
+
+document.addEventListener('DOMContentLoaded', makeModalDraggable);
+
+function addLocation() {
+    document.getElementById('addLocationModal').classList.remove('hidden');
+    document.getElementById('addLocationModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('addLocationModal').classList.add('hidden');
+    document.getElementById('addLocationModal').style.display = 'none';
+}
+
+function openMapModal() {
+    document.getElementById('mapModal').classList.remove('hidden');
+    document.getElementById('mapModal').style.display = 'block';
+    initializeMap();
+}
+
+function closeMapModal() {
+    document.getElementById('mapModal').classList.add('hidden');
+    document.getElementById('mapModal').style.display = 'none';
+}
+
+function saveLocation() {
+    const fullName = document.getElementById('fullName').value;
+    const mobileNumber = document.getElementById('mobileNumber').value;
+    const pincode = document.getElementById('pincode').value;
+    const addressDetails = document.getElementById('addressDetails').value;
+    const townCity = document.getElementById('townCity').value;
+    const state = document.getElementById('state').value;
+    const defaultAddress = document.getElementById('defaultAddress').checked;
+    const deliveryInstructions = document.getElementById('deliveryInstructions').value;
+
+    if (fullName && mobileNumber && pincode && addressDetails && townCity && state) {
+        alert(`Location saved:
+        Full Name: ${fullName}
+        Mobile Number: ${mobileNumber}
+        Pincode: ${pincode}
+        Address Details: ${addressDetails}
+        Town/City: ${townCity}
+        State: ${state}
+        Default Address: ${defaultAddress}
+        Delivery Instructions: ${deliveryInstructions}`);
+        // Add logic to save the location
+        closeModal();
+    } else {
+        alert('Please fill in all required fields.');
+    }
+}
+
+</script>
+</html>

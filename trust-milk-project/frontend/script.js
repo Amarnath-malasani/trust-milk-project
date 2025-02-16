@@ -15,6 +15,7 @@ loginBtn.onclick = function() {
   var username = localStorage.getItem("username");
   if (username) {
     updateUIWithUsername(username); // Update the UI with the username
+    window.location.href = "/profile"; // Redirect to profile page
   } else {
     loginModal.style.display = "block";
   }
