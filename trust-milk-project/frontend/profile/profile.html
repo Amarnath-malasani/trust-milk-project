@@ -329,7 +329,8 @@ button {
         <div class="sidebar">
             <div class="profile">
                 <i class="fas fa-user-circle fa-4x"></i>
-                <h2>Amar</h2>
+                <h2 id="username">Username</h2>
+                <p id="mobile">Mobile Number</p>
             </div>
             <ul class="menu">
                 <li class="active" onclick="showSection('profile', event)"><span>👤</span> Profile</li>
@@ -347,16 +348,16 @@ button {
             <div id="profile" class="content-section box">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" value="Amar" readonly>
+                    <input type="text" id="name" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="mobile">Mobile Number</label>
-                    <input type="text" id="mobile" value="9381393620" readonly>
+                    <label for="profile-mobile">Mobile Number</label>
+                    <input type="text" id="profile-mobile" readonly>
                 </div>
                 <div class="form-group email-group">
                     <label for="email">Email</label>
                     <div class="email-input-container">
-                        <input type="email" id="email" placeholder="Add your email address" value="amar@example.com">
+                        <input type="email" id="email" placeholder="Add your email address">
                         <button class="submit-email" onclick="submitEmail()">Submit</button>
                     </div>
                 </div>
@@ -470,36 +471,105 @@ button {
 <script>
     let map, marker;
 
-function showSection(section, event) {
-    // Hide all sections
-    document.querySelectorAll('.content-section').forEach(sec => sec.classList.add('hidden'));
+document.addEventListener('DOMContentLoaded', function() {
+    fetchProfile();
+});
 
-    // Show the selected section
+function fetchProfile() {
+    fetch('/api/profile')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('username').textContent = data.user.username;
+                document.getElementById('mobile').textContent = data.user.mobile;
+                document.getElementById('name').value = data.user.username;
+                document.getElementById('profile-mobile').value = data.user.mobile;
+                document.getElementById('email').value = data.user.email;
+            } else {
+                alert('Error fetching profile information.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error fetching profile information.');
+        });
+}
+
+function showSection(section, event) {
+    document.querySelectorAll('.content-section').forEach(function(section) {
+        section.classList.add('hidden');
+    });
     document.getElementById(section).classList.remove('hidden');
 
-    // Change the section title
-    document.getElementById('section-title').innerText = section.charAt(0).toUpperCase() + section.slice(1);
+    document.querySelectorAll('.menu li').forEach(function(li) {
+        li.classList.remove('active');
+    });
+    event.currentTarget.classList.add('active');
 
-    // Update active menu
-    document.querySelectorAll('.menu li').forEach(item => item.classList.remove('active'));
-    event.target.classList.add('active');
+    document.getElementById('section-title').textContent = event.currentTarget.textContent.trim();
 }
 
 function logoutUser() {
-    alert("Logging out...");
-    // Redirect or clear session (if needed)
+    localStorage.removeItem('username');
+    localStorage.removeItem('mobile');
+    window.location.href = '/';
 }
 
 function deleteAccount() {
-    if (confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
-        alert("Account deleted.");
-        // Add logic to delete the account
+    const username = localStorage.getItem('username');
+
+    if (username) {
+        fetch('/delete-account', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Account deleted successfully.');
+                logoutUser();
+            } else {
+                alert('Error deleting account.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting account.');
+        });
+    } else {
+        alert('User not logged in.');
     }
 }
 
 function resetPassword() {
-    alert("Password reset link has been sent to your email.");
-    // Add logic to send a password reset link
+    const email = document.getElementById('resetEmail').value;
+
+    if (email) {
+        fetch('/reset-password', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Password reset link sent to your email.');
+            } else {
+                alert('Error sending password reset link.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending password reset link.');
+        });
+    } else {
+        alert('Please enter your email.');
+    }
 }
 
 function submitEmail() {
